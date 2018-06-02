@@ -7,8 +7,17 @@ import { controllers, passport as passportConfig } from '../db';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
+const guestsController = controllers && controllers.guests;
+const reservedGuestsController = controllers && controllers.reservedGuests;
 
 export default (app) => {
+  app.use(function(req, res, next) {
+    // res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8008');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
   // user routes
   if (usersController) {
     app.post('/sessions', usersController.login);
@@ -51,5 +60,18 @@ export default (app) => {
     app.delete('/topic/:id', topicsController.remove);
   } else {
     console.warn(unsupportedMessage('topics routes'));
+  }
+
+  // guest routes
+  if (guestsController) {
+    // app.get('/api/v1/guest/:reservedNumber', guestsController.show)
+    app.post('/api/v1/guest/add', guestsController.add)
+  }
+
+  // reservedGuest routes
+  if (reservedGuestsController) {
+    app.get('/api/v1/guest/reserved_get', reservedGuestsController.all)
+    app.post('/api/v1/guest/reserved_add', reservedGuestsController.add)
+    app.post('/api/v1/guest/reserved_remove', reservedGuestsController.remove)
   }
 };
