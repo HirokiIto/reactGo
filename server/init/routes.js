@@ -64,7 +64,7 @@ export default (app) => {
 
   // guest routes
   if (guestsController) {
-    // app.get('/api/v1/guest/:reservedNumber', guestsController.show)
+    app.get('/api/v1/guest/get', guestsController.all)
     app.post('/api/v1/guest/add', guestsController.add)
   }
 
