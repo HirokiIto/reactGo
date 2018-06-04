@@ -9,7 +9,7 @@ const ReservedGuestSchema = new mongoose.Schema({
   subscriber: String, // 予約者
   reservedDate: Date, // 予約日
   departureDate: Date, // 出発日
-  howManyPeople: { type: Number, min: 1 }, // 何名
+  howManyPeople: String, // 何名, 値段
   roomNumber: { type: Number, default: 0 }, // 部屋番号
   date: { type: Date, default: Date.now }
 });
