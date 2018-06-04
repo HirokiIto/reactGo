@@ -12,8 +12,7 @@ const reservedGuestsController = controllers && controllers.reservedGuests;
 
 export default (app) => {
   app.use(function(req, res, next) {
-    // res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8008');
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
