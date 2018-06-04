@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "otsuka-back",
+      "script": "npm",
+      "args" : "run dev"
+    }
+  ]
+}
