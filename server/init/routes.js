@@ -24,6 +24,8 @@ const corsOptions = {
 }
 
 export default (app) => {
+  app.use(cors(corsOptions));
+
   // user routes
   if (usersController) {
     app.post('/sessions', usersController.login);
@@ -70,14 +72,14 @@ export default (app) => {
 
   // guest routes
   if (guestsController) {
-    app.get('/api/v1/guest/get', cors(corsOptions), guestsController.all)
-    app.post('/api/v1/guest/add', cors(corsOptions), guestsController.add)
+    app.get('/api/v1/guest/get', guestsController.all)
+    app.post('/api/v1/guest/add', guestsController.add)
   }
 
   // reservedGuest routes
   if (reservedGuestsController) {
-    app.get('/api/v1/guest/reserved_get', cors(corsOptions), reservedGuestsController.all)
-    app.post('/api/v1/guest/reserved_add', cors(corsOptions), reservedGuestsController.add)
-    app.post('/api/v1/guest/reserved_remove', cors(corsOptions), reservedGuestsController.remove)
+    app.get('/api/v1/guest/reserved_get', reservedGuestsController.all)
+    app.post('/api/v1/guest/reserved_add', reservedGuestsController.add)
+    app.post('/api/v1/guest/reserved_remove', reservedGuestsController.remove)
   }
 };
