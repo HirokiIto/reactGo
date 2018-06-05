@@ -1,6 +1,8 @@
 /**
  * Routes for express app
  */
+import cors from 'cors';
+
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
@@ -10,14 +12,18 @@ const topicsController = controllers && controllers.topics;
 const guestsController = controllers && controllers.guests;
 const reservedGuestsController = controllers && controllers.reservedGuests;
 
-export default (app) => {
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, Authorization, X-Requested-With, Content-Type, Accept");
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
-    next();
-  });
+const whitelist = ['http://localhost:8008', 'http://192.168.1.8:8008', 'http://192.168.1.12:8008']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
+export default (app) => {
   // user routes
   if (usersController) {
     app.post('/sessions', usersController.login);
@@ -64,14 +70,14 @@ export default (app) => {
 
   // guest routes
   if (guestsController) {
-    app.get('/api/v1/guest/get', guestsController.all)
-    app.post('/api/v1/guest/add', guestsController.add)
+    app.get('/api/v1/guest/get', cors(corsOptions), guestsController.all)
+    app.post('/api/v1/guest/add', cors(corsOptions), guestsController.add)
   }
 
   // reservedGuest routes
   if (reservedGuestsController) {
-    app.get('/api/v1/guest/reserved_get', reservedGuestsController.all)
-    app.post('/api/v1/guest/reserved_add', reservedGuestsController.add)
-    app.post('/api/v1/guest/reserved_remove', reservedGuestsController.remove)
+    app.get('/api/v1/guest/reserved_get', cors(corsOptions), reservedGuestsController.all)
+    app.post('/api/v1/guest/reserved_add', cors(corsOptions), reservedGuestsController.add)
+    app.post('/api/v1/guest/reserved_remove', cors(corsOptions), reservedGuestsController.remove)
   }
 };
