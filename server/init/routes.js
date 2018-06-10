@@ -12,7 +12,7 @@ const topicsController = controllers && controllers.topics;
 const guestsController = controllers && controllers.guests;
 const reservedGuestsController = controllers && controllers.reservedGuests;
 
-const whitelist = ['http://localhost', 'http://localhost:8008', 'https://localhost', 'http://192.168.1.12:8008', 'https://192.168.1.12', 'http://192.168.100.100', 'http://192.168.100.100:8008', 'https://192.168.100.100']
+const whitelist = ['http://localhost', 'http://localhost:8008', 'https://localhost', 'http://192.168.1.12:8008', 'https://192.168.1.12', 'http://192.168.100.100', 'http://192.168.100.100:8008', 'https://192.168.100.100', 'http://192.168.100.101', 'http://192.168.100.101:8008', 'https://192.168.100.101']
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
